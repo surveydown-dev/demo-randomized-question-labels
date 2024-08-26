@@ -1,2 +1,1 @@
-# demo-reactive-question
- Demo survey showcasing an reactive question
+A demo of how to implement [randomized question labels](https://surveydown.org/reactivity#randomizing-question-labels) in a surveydown survey.
