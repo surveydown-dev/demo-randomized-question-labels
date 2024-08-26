@@ -26,26 +26,13 @@ sd_setup()
 
 # Welcome to our survey!
 
-This is a simple demonstration of a surveydown survey. It has two pages with one question on each page.
+Here is a basic "multiple choice" question where the labels are randomly sampled from 1 to 100.
 
-Here is a basic "multiple choice" question, created using `type = 'mc'` inside the `sd_question()` function:
+If you refresh the page, the options should change.
 
 ```{r}
-sd_question(
-  type  = 'mc',
-  id    = 'penguins',
-  label = "Which type of penguin do you like the best?",
-  option = c(
-    'Adélie'    = 'adelie',
-    'Chinstrap' = 'chinstrap',
-    'Gentoo'    = 'gentoo'
-  )
-)
+sd_display_question(id = "q1")
 ```
-
-<br>
-
-You need to insert next buttons with `sd_next()` and set the `next_page` argument to the name of the page you want to go to next.
 
 ```{r}
 sd_next(next_page = 'page2')
@@ -56,19 +43,6 @@ sd_next(next_page = 'page2')
 ::: {#page2 .sd-page}
 
 This is another page in your survey.
-
-{surveydown} supports many types of questions. For example, here is a simple `text` type question:
-
-```{r}
-sd_question(
-  type  = "text",
-  id    = "silly_word",
-  label = "Write a silly word here:"
-)
-```
- 
-<br>
-
 ```{r}
 sd_next(next_page = 'end')
 ```
@@ -93,7 +67,17 @@ q1_labels <- sample(seq(100), 3)
 # Assign the labels to the options
 names(q1_options) <- q1_labels 
 
-q1_options
+# Store the labels in the database
+sd_store_value(q1_labels, id = "q1_labels")
+
+# Create a reactive question
+sd_question(
+  id = "q1",
+  type = "mc",  
+  label = "Which of these numbers is the largest?",
+  option = q1_options,
+  reactive = TRUE
+)
 
 ##################
 # database setup #
